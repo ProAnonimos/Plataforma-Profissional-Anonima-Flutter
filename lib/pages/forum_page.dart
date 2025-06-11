@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ForumPage extends StatelessWidget {
-  final bool showAppBar;
-
-  ForumPage({this.showAppBar = false});
-
   final List<Map<String, String>> forums = [
     {
       "nome": "Flutter",
@@ -22,32 +18,29 @@ class ForumPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final content = ListView.builder(
+    return ListView.builder(
+      padding: EdgeInsets.all(12),
       itemCount: forums.length,
       itemBuilder: (context, index) {
         final forum = forums[index];
         return Card(
-          margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: ListTile(
-            title: Text(forum['nome']!, style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(forum['descricao']!),
-            onTap: () {
-            },
+          margin: EdgeInsets.only(bottom: 12),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  forum['nome']!,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                Text(forum['descricao']!),
+              ],
+            ),
           ),
         );
       },
     );
-
-    if (showAppBar) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text("TechNet - Fórum"),
-          leading: BackButton(),
-        ),
-        body: content,
-      );
-    } else {
-      return content;
-    }
   }
 }

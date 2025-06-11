@@ -10,26 +10,33 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("TechNet", style: TextStyle(fontSize: 32, color: Colors.blue, fontWeight: FontWeight.bold)),
-            SizedBox(height: 20),
-            TextField(
-              controller: _userController,
-              decoration: InputDecoration(labelText: "Usuário"),
-            ),
-            TextField(
-              controller: _passController,
-              obscureText: true,
-              decoration: InputDecoration(labelText: "Senha"),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => FeedPage())),
-              child: Text("Entrar"),
-            )
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Plataforma Profissional Anônima",
+                style: TextStyle(fontSize: 32, color: Colors.blue, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: _userController,
+                decoration: InputDecoration(labelText: "Usuário"),
+              ),
+              TextField(
+                controller: _passController,
+                obscureText: true,
+                decoration: InputDecoration(labelText: "Senha"),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => FeedPage())),
+                child: Text("Entrar"),
+              )
+            ],
+          ),
         ),
       ),
     );

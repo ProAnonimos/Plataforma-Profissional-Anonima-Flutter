@@ -9,17 +9,20 @@ class PerfilPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(child: Icon(Icons.account_circle, size: 100, color: Colors.blue)),
-          SizedBox(height: 20),
-          Text("Nome: $nome", style: TextStyle(fontSize: 18)),
-          SizedBox(height: 10),
-          Text("Bio: $bio"),
-          SizedBox(height: 10),
-          Text("Habilidades: ${habilidades.join(", ")}"),
-        ],
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(Icons.account_circle, size: 100, color: Colors.blue),
+            SizedBox(height: 20),
+            Text("Nome: $nome", style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
+            Text("$bio"),
+            SizedBox(height: 10),
+            Text("Habilidades: ${habilidades.join(", ")}"),
+          ],
+        ),
       ),
     );
   }
