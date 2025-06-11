@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'noticias_page.dart';
+import 'conteudos.dart';
 import 'chat_page.dart';
 import 'matchmaking_page.dart';
 import 'support_page.dart';
@@ -60,13 +60,9 @@ class _FeedPageState extends State<FeedPage> {
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ForumPageWithScaffold(),
-                        ),
-                      );
+                      setState(() => _currentIndex = 2);
                     },
+
                     child: Text("Fórum"),
                   ),
                   ElevatedButton(
@@ -75,7 +71,7 @@ class _FeedPageState extends State<FeedPage> {
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () {
-                      setState(() => _currentIndex = 3);
+                      setState(() => _currentIndex = 1);
                     },
                     child: Text("Matchmaking"),
                   ),

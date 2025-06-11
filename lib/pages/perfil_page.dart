@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'login_page.dart'; 
 
 class PerfilPage extends StatelessWidget {
-  final String nome = "Usuário";
-  final String bio = "Sou um desenvolvedor focado em tecnologia e inovação.";
-  final List<String> habilidades = ["Flutter", "Dart", "UI/UX"];
+  final String nome = "TechNomadX";
+  final String bio = "Sou um desenvolvedor focado em mobile e análise de dados.";
+  final List<String> habilidades = ["Flutter", "SQL", "Python"];
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,20 @@ class PerfilPage extends StatelessWidget {
             Text("$bio"),
             SizedBox(height: 10),
             Text("Habilidades: ${habilidades.join(", ")}"),
+            SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => LoginPage()),
+                  (route) => false,
+                );
+              },
+              child: Text("Logout"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+            ),
           ],
         ),
       ),
