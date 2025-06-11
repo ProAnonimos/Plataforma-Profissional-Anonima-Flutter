@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'conteudos.dart';
 import 'chat_page.dart';
 import 'matchmaking_page.dart';
-import 'support_page.dart';
+import 'suporte_page.dart';
 import 'perfil_page.dart';
 import 'forum_page.dart';
 

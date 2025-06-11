@@ -20,10 +20,10 @@ class _SupportPageState extends State<SupportPage> {
               Icon(Icons.support_agent, size: 80, color: Colors.blue),
               SizedBox(height: 20),
               Text(
-                "Precisa de ajuda?",
+                "Precisa de ajuda? Aqui prexamos pela sua experiência em nossa plataforma",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              Text("Descreva o problema e nossa equipe irá analisar."),
+              Text("Qualquer reclamação ou dúvida estamos à disposição."),
               SizedBox(height: 24),
               TextField(
                 controller: _mensagemController,
