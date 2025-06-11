@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 class ForumPage extends StatelessWidget {
   final List<Map<String, String>> forums = [
     {
+      "nome": "Segurança",
+      "descricao": "Discussões sobre cibersegurança para devs e outras áreas de TI."
+    },
+    {
       "nome": "Flutter",
       "descricao": "Discussões sobre Flutter e desenvolvimento mobile."
     },
