@@ -17,7 +17,21 @@ class LoginPage extends StatelessWidget {
             children: [
               Text(
                 "Plataforma Profissional Anônima",
-                style: TextStyle(fontSize: 32, color: Colors.blue, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 32,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 8), // Espaço entre os textos
+              Text(
+                "Autenticação segura",
+                style: TextStyle(
+                  fontSize: 19,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.normal,
+                ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 20),
@@ -37,8 +51,9 @@ class LoginPage extends StatelessWidget {
                     MaterialPageRoute(builder: (_) => FeedPage()),
                   );
                 },
-                child: Text("Entrar"),
-              )
+                style: ElevatedButton.styleFrom(minimumSize: Size(200, 50)),
+                child: Text("Entrar", style: TextStyle(fontSize: 16)),
+              ),
             ],
           ),
         ),

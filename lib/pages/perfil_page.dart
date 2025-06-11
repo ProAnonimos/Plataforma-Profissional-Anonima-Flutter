@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart'; 
+import 'login_page.dart';
 
 class PerfilPage extends StatelessWidget {
   final String nome = "TechNomadX";
-  final String bio = "Sou um desenvolvedor focado em mobile e análise de dados.";
+  final String email = "joaosilva@fiap.com";
+  final String bio =
+      "Sou um desenvolvedor focado em mobile e análise de dados.";
   final List<String> habilidades = ["Flutter", "SQL", "Python"];
 
   @override
@@ -15,13 +17,35 @@ class PerfilPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(Icons.account_circle, size: 100, color: Colors.blue),
+            Icon(Icons.account_circle, size: 150, color: Colors.blue),
             SizedBox(height: 20),
-            Text("Nome: $nome", style: TextStyle(fontSize: 18)),
+            Text("Nome: $nome", style: TextStyle(fontSize: 28)),
             SizedBox(height: 10),
-            Text("$bio"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "E-mail: $email",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 8),
+                Text(
+                  "(disponível apenas para você)",
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+              ],
+            ),
             SizedBox(height: 10),
-            Text("Habilidades: ${habilidades.join(", ")}"),
+            Text(
+              "$bio",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(height: 10),
+            Text(
+              "Habilidades: ${habilidades.join(", ")}",
+              style: TextStyle(fontSize: 18),
+            ),
             SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
