@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 8), // Espaço entre os textos
+              SizedBox(height: 8), 
               Text(
                 "Autenticação segura",
                 style: TextStyle(

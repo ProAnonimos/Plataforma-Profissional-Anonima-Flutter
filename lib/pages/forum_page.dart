@@ -23,7 +23,6 @@ class ForumPage extends StatelessWidget {
       itemCount: forums.length + 1,
       itemBuilder: (context, index) {
         if (index == 0) {
-          // Subtítulo no topo
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
