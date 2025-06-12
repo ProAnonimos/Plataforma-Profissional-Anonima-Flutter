@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 class ForumPage extends StatelessWidget {
   final List<Map<String, String>> forums = [
     {
-      "nome": "Segurança",
-      "descricao":
-          "Discussões sobre cibersegurança para devs e outras áreas de TI.",
-    },
-    {
       "nome": "Flutter",
       "descricao": "Discussões sobre Flutter e desenvolvimento mobile.",
     },
@@ -28,18 +23,16 @@ class ForumPage extends StatelessWidget {
       itemCount: forums.length + 1,
       itemBuilder: (context, index) {
         if (index == 0) {
+          // Subtítulo no topo
           return Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: Center(
-              child: Text(
-                "Participe de discussões anônimas. Moderação automatizada. Suporte disponível para dúvidas.",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-              ),
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Text(
+              "Participe de discussões anônimas",
+              style: TextStyle(fontSize: 20, color: Colors.grey[700]),
+              textAlign: TextAlign.center,
             ),
           );
         }
-
         final forum = forums[index - 1];
         return Card(
           margin: EdgeInsets.only(bottom: 12),
