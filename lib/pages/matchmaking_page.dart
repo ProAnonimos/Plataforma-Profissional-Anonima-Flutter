@@ -75,9 +75,9 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
         onTapUp: (details) {
           final larguraTela = MediaQuery.of(context).size.width;
           if (details.globalPosition.dx < larguraTela / 2) {
-            aceitar(); // metade esquerda = aceitar
+            aceitar();
           } else {
-            recusar(); // metade direita = recusar
+            recusar();
           }
         },
         child: SafeArea(
@@ -86,9 +86,9 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
             direction: DismissDirection.horizontal,
             onDismissed: (direction) {
               if (direction == DismissDirection.startToEnd) {
-                recusar(); // arrastou pra direita = recusar
+                recusar(); 
               } else if (direction == DismissDirection.endToStart) {
-                aceitar(); // arrastou pra esquerda = aceitar
+                aceitar(); 
               }
             },
             background: Container(
@@ -107,9 +107,8 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Container que limita a largura do card e dos botões
                   Container(
-                    width: 360, // largura fixa do card e botões, pode ajustar
+                    width: 360, 
                     child: Card(
                       elevation: 8,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -141,7 +140,7 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
                   ),
                   SizedBox(height: 12),
                   Container(
-                    width: 360, // mesma largura do card
+                    width: 360,
                     child: Row(
                       children: [
                         Expanded(
