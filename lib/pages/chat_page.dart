@@ -9,9 +9,9 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _controller = TextEditingController();
 
   final List<Map<String, dynamic>> _messages = [
-    {'text': 'Olá! Precisa de ajuda com Flutter?', 'isUser': false},
-    {'text': 'Sim! Estou com uma dúvida sobre o layout.', 'isUser': true},
-    {'text': 'Claro! Manda a dúvida.', 'isUser': false},
+    {'text': 'Oi, tudo bem? Vi um comentário seu no grupo sobre mudança de carreira pra UX. Tô justamente nesse momento. Você toparia trocar umas ideias?', 'isUser': false},
+    {'text': 'Claro! Passei por isso ano passado. Vim de desenvolvimento front. O que tá pegando mais pra você?', 'isUser': true},
+    {'text': 'Acho que o medo de começar do zero. E também não sei se invisto em curso, portfólio, ou tento uma vaga júnior direto.', 'isUser': false},
   ];
 
   void _sendMessage() {

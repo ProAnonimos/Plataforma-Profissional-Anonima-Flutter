@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'noticias_page.dart';
+import 'conteudos.dart';
 import 'chat_page.dart';
 import 'matchmaking_page.dart';
-import 'support_page.dart';
+import 'suporte_page.dart';
 import 'perfil_page.dart';
 import 'forum_page.dart';
 
@@ -13,6 +13,7 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends State<FeedPage> {
   int _currentIndex = 0;
+  Map<String, String>? _postSelecionado; // post aberto
 
   final List<Widget> _pages = [
     NoticiasTecnologia(),
@@ -42,54 +43,89 @@ class _FeedPageState extends State<FeedPage> {
     }
   }
 
+  void abrirPost(Map<String, String> post) {
+    setState(() {
+      _postSelecionado = post;
+    });
+  }
+
+  void fecharPost() {
+    setState(() {
+      _postSelecionado = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(getTitle(_currentIndex))),
-      body: Column(
-        children: [
-          if (_currentIndex == 0)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ForumPageWithScaffold(),
-                        ),
-                      );
-                    },
-                    child: Text("Fórum"),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() => _currentIndex = 3);
-                    },
-                    child: Text("Matchmaking"),
-                  ),
-                ],
-              ),
-            ),
-          Expanded(child: _pages[_currentIndex]),
-        ],
+      appBar: AppBar(
+        title: Text(
+          _postSelecionado != null
+              ? _postSelecionado!['titulo']!
+              : getTitle(_currentIndex),
+        ),
+        leading: _postSelecionado != null
+            ? BackButton(onPressed: fecharPost)
+            : null,
       ),
+      body: _postSelecionado != null
+          ? Padding(
+              padding: EdgeInsets.all(16),
+              child: SingleChildScrollView(
+                child: Text(
+                  _postSelecionado!['conteudo']!,
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            )
+          : Column(
+              children: [
+                if (_currentIndex == 0)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() => _currentIndex = 2);
+                          },
+                          child: Text("Fórum"),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() => _currentIndex = 1);
+                          },
+                          child: Text("Matchmaking"),
+                        ),
+                      ],
+                    ),
+                  ),
+                Expanded(
+                  child: _currentIndex == 0
+                      ? NoticiasTecnologia(onPostTap: abrirPost)
+                      : _pages[_currentIndex],
+                ),
+              ],
+            ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
-        onTap: (index) => setState(() => _currentIndex = index),
+        onTap: (index) {
+          if (_postSelecionado != null) {
+            fecharPost();
+          }
+          setState(() => _currentIndex = index);
+        },
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Feed"),
           BottomNavigationBarItem(
@@ -109,50 +145,48 @@ class _FeedPageState extends State<FeedPage> {
   }
 }
 
-class ForumPageWithScaffold extends StatelessWidget {
-  final List<Map<String, String>> forums = [
-    {
-      "nome": "Flutter",
-      "descricao": "Discussões sobre Flutter e desenvolvimento mobile.",
-    },
-    {
-      "nome": "IA e Machine Learning",
-      "descricao": "Fórum para trocar ideias sobre inteligência artificial.",
-    },
-    {
-      "nome": "Dicas de Carreira",
-      "descricao": "Conselhos e dúvidas sobre carreira em tecnologia.",
-    },
-  ];
+final List<Map<String, String>> forums = [
+  {
+    "nome": "Flutter",
+    "descricao": "Discussões sobre Flutter e desenvolvimento mobile.",
+  },
+  {
+    "nome": "IA e Machine Learning",
+    "descricao": "Fórum para trocar ideias sobre inteligência artificial.",
+  },
+  {
+    "nome": "Dicas de Carreira",
+    "descricao": "Conselhos e dúvidas sobre carreira em tecnologia.",
+  },
+];
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Fórum"), leading: BackButton()),
-      body: ListView.builder(
-        padding: EdgeInsets.all(12),
-        itemCount: forums.length,
-        itemBuilder: (context, index) {
-          final forum = forums[index];
-          return Card(
-            margin: EdgeInsets.only(bottom: 12),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    forum['nome']!,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text(forum['descricao']!),
-                ],
-              ),
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(title: Text("Fórum"), leading: BackButton()),
+    body: ListView.builder(
+      padding: EdgeInsets.all(12),
+      itemCount: forums.length,
+      itemBuilder: (context, index) {
+        final forum = forums[index];
+        return Card(
+          margin: EdgeInsets.only(bottom: 12),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  forum['nome']!,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                Text(forum['descricao']!),
+              ],
             ),
-          );
-        },
-      ),
-    );
-  }
+          ),
+        );
+      },
+    ),
+  );
 }
