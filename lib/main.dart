@@ -12,8 +12,10 @@ void main() async {
   });
   notifications.setUpFirebase();
 
+
   runApp(RedeSocialApp());
 }
+
 
 class RedeSocialApp extends StatelessWidget {
   @override
