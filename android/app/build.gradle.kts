@@ -3,12 +3,20 @@ plugins {
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+     id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
+dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
+
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-messaging")
+}
 android {
     namespace = "com.github.proanonimos.plataforma_profissional_anonima"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
