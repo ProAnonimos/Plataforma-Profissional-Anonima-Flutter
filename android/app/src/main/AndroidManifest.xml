@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:label="plataforma_profissional_anonima"
-        android:name="${applicationName}"
+        android:name="${Plataforma Profissional anônima}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
