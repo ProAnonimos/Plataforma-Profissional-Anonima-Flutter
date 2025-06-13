@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'conteudos.dart';
+import '../post/conteudos.dart';
 import 'chat_page.dart';
 import 'matchmaking_page.dart';
 import 'suporte_page.dart';
