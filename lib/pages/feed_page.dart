@@ -5,6 +5,7 @@ import 'matchmaking_page.dart';
 import 'suporte_page.dart';
 import 'perfil_page.dart';
 import 'forum_page.dart';
+import 'noticias_tecnologia_page.dart';
 
 class FeedPage extends StatefulWidget {
   @override
@@ -105,6 +106,18 @@ class _FeedPageState extends State<FeedPage> {
                           },
                           child: Text("Matchmaking"),
                         ),
+                        ElevatedButton(
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => NoticiasTecnologiaPage(),
+      ),
+    );
+  },
+  child: Text("Notícias"),
+)
+
                       ],
                     ),
                   ),
