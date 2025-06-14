@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'pages/login_page.dart';
 
 void main() {
-  runApp(RedeSocialApp());
+  runApp(PlataformaAnonima());
 }
 
-class RedeSocialApp extends StatelessWidget {
+class PlataformaAnonima extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
