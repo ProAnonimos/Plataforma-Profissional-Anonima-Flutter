@@ -22,6 +22,9 @@ class _NoticiasPageState extends State<NoticiasPage> {
     fetchNoticias();
   }
 
+//enquanto desenvolvido, não foram encontradas notícias em portguês e por isso estamos utilizando em inglês!
+//além disso, a API de tradução do google precisa de um cartão cadastrado e achamos melhor não arriscar uma cobrança
+ 
   Future<void> fetchNoticias() async {
     final url = Uri.parse(
       'https://newsapi.org/v2/top-headlines?category=technology&apiKey=c18640f701a3449786561e297f11f41f'
