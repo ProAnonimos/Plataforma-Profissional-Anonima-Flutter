@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+=======
+
+import 'package:firebase_core/firebase_core.dart';
+import 'tools/notification_handler.dart';
+>>>>>>> 47db9e9b0f46e285b8248e0486693faa9b5642fa
 import 'pages/login_page.dart';
 import 'providers/all_providers.dart';
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 47db9e9b0f46e285b8248e0486693faa9b5642fa
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
+<<<<<<< HEAD
   runApp(
     MultiProvider(
       providers: [
@@ -27,9 +37,19 @@ void main() async {
       child: PlataformaAnonima(),
     ),
   );
+=======
+  final notifications = Notifications((message) {
+    print("Notificação recebida: $message");
+  });
+  notifications.setUpFirebase();
+
+
+  runApp(RedeSocialApp());
+>>>>>>> 47db9e9b0f46e285b8248e0486693faa9b5642fa
 }
 
-class PlataformaAnonima extends StatelessWidget {
+
+class RedeSocialApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
