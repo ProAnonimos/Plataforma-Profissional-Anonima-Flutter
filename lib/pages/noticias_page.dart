@@ -1,46 +1,107 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class NoticiasPage extends StatelessWidget {
+class NoticiasPage extends StatefulWidget {
   final Function(Map<String, String>)? onPostTap;
 
-  const NoticiasPage({this.onPostTap});
+  const NoticiasPage({this.onPostTap, Key? key}) : super(key: key);
+
+  @override
+  _NoticiasPageState createState() => _NoticiasPageState();
+}
+
+class _NoticiasPageState extends State<NoticiasPage> {
+  List<Map<String, String>> _noticias = [];
+  bool _loading = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchNoticias();
+  }
+
+  Future<void> fetchNoticias() async {
+    final url = Uri.parse(
+      'https://newsapi.org/v2/top-headlines?category=technology&apiKey=c18640f701a3449786561e297f11f41f'
+    );
+
+    try {
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final List articles = data['articles'];
+
+        setState(() {
+          _noticias = articles.map<Map<String, String>>((art) {
+            return {
+              'titulo': art['title'] ?? 'Sem título',
+              'conteudo': art['description'] ?? 'Sem descrição',
+            };
+          }).toList();
+          _loading = false;
+        });
+      } else {
+        setState(() {
+          _error = 'Erro ao carregar notícias: ${response.statusCode}';
+          _loading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _error = 'Erro: $e';
+        _loading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notícias"),
+        title: Text("Notícias de Tecnologia"),
       ),
-      body: SingleChildScrollView(
-        child: Center(  
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,  
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(Icons.newspaper, size: 80, color: Colors.blue),
-                SizedBox(height: 20),
-                Text(
-                  "Notícias de Tecnologia",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+      body: _loading
+          ? Center(child: CircularProgressIndicator())
+          : _error != null
+              ? Center(child: Text(_error!))
+              : ListView.separated(
+                  padding: EdgeInsets.all(16),
+                  itemCount: _noticias.length,
+                  separatorBuilder: (_, __) => Divider(),
+                  itemBuilder: (context, index) {
+                    final noticia = _noticias[index];
+                    return ListTile(
+                      leading: Icon(Icons.newspaper, color: Colors.blue),
+                      title: Text(noticia['titulo']!),
+                      subtitle: Text(
+                        noticia['conteudo']!,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      onTap: () {
+                        if (widget.onPostTap != null) {
+                          widget.onPostTap!(noticia);
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text(noticia['titulo']!),
+                              content: Text(noticia['conteudo']!),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text('Fechar'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      },
+                    );
+                  },
                 ),
-                Text(
-                  "Fique por dentro das últimas novidades do mundo tech.",
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 24),
-                Text(
-                  "• Flutter 4.0 está em desenvolvimento...\n• Google lança novo chip para IA...\n• GitHub Copilot ganha melhorias...",
-                  style: TextStyle(fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
