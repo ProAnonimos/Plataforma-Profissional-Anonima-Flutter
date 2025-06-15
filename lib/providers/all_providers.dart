@@ -1,0 +1,10 @@
+export 'notification_provider.dart';
+export 'chat_provider.dart';
+export 'feed_provider.dart';
+export 'forum_provider.dart';
+export 'login_provider.dart';
+export 'matchmaking_provider.dart';
+export 'noticias_provider.dart';
+export 'perfil_provider.dart';
+export 'suporte_provider.dart';
+export 'vagas_provider.dart';
