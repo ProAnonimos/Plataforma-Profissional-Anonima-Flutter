@@ -2,6 +2,9 @@
 
 A new Flutter project.
 
+## Conta pra testes
+usuario: user
+senha: 1234
 ## Getting Started
 
 This project is a starting point for a Flutter application.
