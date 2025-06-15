@@ -1,103 +1,74 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import '../providers/vagas_provider.dart';
 
-class VagasEmpregoPage extends StatefulWidget {
-  @override
-  _VagasEmpregoPageState createState() => _VagasEmpregoPageState();
-}
-
-class _VagasEmpregoPageState extends State<VagasEmpregoPage> {
-  List _vagas = [];
-  bool _loading = true;
-  String? _error;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchVagas();
-  }
-
-  Future<void> fetchVagas() async {
-    final url = Uri.parse('https://www.themuse.com/api/public/jobs?page=1');
-    try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        setState(() {
-          _vagas = data['results'];
-          _loading = false;
-        });
-      } else {
-        setState(() {
-          _error = 'Erro ao carregar vagas: ${response.statusCode}';
-          _loading = false;
-        });
-      }
-    } catch (e) {
-      setState(() {
-        _error = 'Erro: $e';
-        _loading = false;
-      });
-    }
-  }
-
+class VagasEmpregoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final vagasProvider = Provider.of<VagasProvider>(context);
+
     return Scaffold(
       appBar: AppBar(title: Text('Vagas de Emprego')),
-      body: _loading
-          ? Center(child: CircularProgressIndicator())
-          : _error != null
-          ? Center(child: Text(_error!))
-          : _vagas.isEmpty
-          ? Center(
+      body: Builder(
+        builder: (context) {
+          if (vagasProvider.loading) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (vagasProvider.error != null) {
+            return Center(child: Text(vagasProvider.error!));
+          }
+          if (vagasProvider.vagas.isEmpty) {
+            return Center(
               child: Text(
                 'Nenhuma vaga encontrada no momento.',
                 style: TextStyle(fontSize: 18),
                 textAlign: TextAlign.center,
               ),
-            )
-          : ListView.separated(
-              padding: EdgeInsets.all(16),
-              itemCount: _vagas.length,
-              separatorBuilder: (_, __) => Divider(),
-              itemBuilder: (context, index) {
-                final vaga = _vagas[index];
-                return ListTile(
-                  title: Text(vaga['name'] ?? 'Sem título'),
-                  subtitle: Text(
-                    vaga['locations'] != null && vaga['locations'].isNotEmpty
-                        ? vaga['locations'][0]['name']
-                        : 'Localização não informada',
-                  ),
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) => AlertDialog(
-                        title: Text(vaga['name'] ?? ''),
-                        content: SingleChildScrollView(
-                          child: Text(
-                            vaga['contents'] != null
-                                ? vaga['contents'].replaceAll(
-                                    RegExp(r'<[^>]*>'),
-                                    '',
-                                  )
-                                : 'Descrição não disponível',
-                          ),
+            );
+          }
+
+          return ListView.separated(
+            padding: EdgeInsets.all(16),
+            itemCount: vagasProvider.vagas.length,
+            separatorBuilder: (_, __) => Divider(),
+            itemBuilder: (context, index) {
+              final vaga = vagasProvider.vagas[index];
+              return ListTile(
+                title: Text(vaga['name'] ?? 'Sem título'),
+                subtitle: Text(
+                  vaga['locations'] != null && vaga['locations'].isNotEmpty
+                      ? vaga['locations'][0]['name']
+                      : 'Localização não informada',
+                ),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                      title: Text(vaga['name'] ?? ''),
+                      content: SingleChildScrollView(
+                        child: Text(
+                          vaga['contents'] != null
+                              ? vaga['contents'].replaceAll(
+                                  RegExp(r'<[^>]*>'),
+                                  '',
+                                )
+                              : 'Descrição não disponível',
                         ),
-                        actions: [
-                          TextButton(
-                            child: Text('Fechar'),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                        ],
                       ),
-                    );
-                  },
-                );
-              },
-            ),
+                      actions: [
+                        TextButton(
+                          child: Text('Fechar'),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

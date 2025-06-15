@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'login_page.dart';
+import '../providers/perfil_provider.dart';
 
 class PerfilPage extends StatelessWidget {
-  final String nome = "TechNomadX";
-  final String email = "joaosilva@fiap.com";
-  final String empresa = "fiap";
-  final String bio =
-      "Sou um desenvolvedor focado em mobile e análise de dados.";
-  final List<String> habilidades = ["Flutter", "SQL", "Python"];
-
   @override
   Widget build(BuildContext context) {
+    final perfil = Provider.of<PerfilProvider>(context);
+
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Center(
@@ -20,16 +17,16 @@ class PerfilPage extends StatelessWidget {
           children: [
             Icon(Icons.account_circle, size: 150, color: Colors.blue),
             SizedBox(height: 20),
-            Text("Nome: $nome", style: TextStyle(fontSize: 28)),
+            Text("Nome: ${perfil.nome}", style: TextStyle(fontSize: 28)),
             SizedBox(height: 10),
             Text(
-              "$bio",
+              perfil.bio,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 10),
             Text(
-              "Habilidades: ${habilidades.join(", ")}",
+              "Habilidades: ${perfil.habilidades.join(", ")}",
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 10),
@@ -46,10 +43,10 @@ class PerfilPage extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("E-mail: $email", style: TextStyle(fontSize: 18)),
+                    Text("E-mail: ${perfil.email}", style: TextStyle(fontSize: 18)),
                     SizedBox(height: 4),
                     Text(
-                      "Empresa/universidade: $empresa",
+                      "Empresa/universidade: ${perfil.empresa}",
                       style: TextStyle(fontSize: 18),
                     ),
                   ],

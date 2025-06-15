@@ -1,47 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/matchmaking_provider.dart';
 
-class MatchmakingPage extends StatefulWidget {
-  @override
-  _MatchmakingPageState createState() => _MatchmakingPageState();
-}
-
-class _MatchmakingPageState extends State<MatchmakingPage> {
-  final List<Map<String, dynamic>> perfis = [
-    {
-      "nome": "João",
-      "habilidades": ["Flutter", "Firebase", "UX Design"],
-      "bio": "Desenvolvedor apaixonado por tecnologia mobile."
-    },
-    {
-      "nome": "Carla",
-      "habilidades": ["Python", "Machine Learning", "Data Science"],
-      "bio": "Entusiasta de IA e dados."
-    },
-  ];
-
-  int perfilAtual = 0;
-
-  void aceitar() {
-    if (perfilAtual < perfis.length - 1) {
-      setState(() {
-        perfilAtual++;
-      });
-    } else {
-      _mostrarFimPerfis();
-    }
-  }
-
-  void recusar() {
-    if (perfilAtual < perfis.length - 1) {
-      setState(() {
-        perfilAtual++;
-      });
-    } else {
-      _mostrarFimPerfis();
-    }
-  }
-
-  void _mostrarFimPerfis() {
+class MatchmakingPage extends StatelessWidget {
+  void _mostrarFimPerfis(BuildContext context) {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
@@ -59,25 +21,32 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (perfilAtual >= perfis.length) {
+    final provider = context.watch<MatchmakingProvider>();
+
+    final perfil = provider.perfilAtualDados;
+
+    if (perfil == null) {
       return Center(
-        child: Text(
-          "Não há mais perfis para mostrar.",
-          style: TextStyle(fontSize: 18),
+        child: ElevatedButton(
+          onPressed: () {
+            provider.reset();
+          },
+          child: Text("Reiniciar"),
         ),
       );
     }
-
-    final perfil = perfis[perfilAtual];
 
     return Scaffold(
       body: GestureDetector(
         onTapUp: (details) {
           final larguraTela = MediaQuery.of(context).size.width;
           if (details.globalPosition.dx < larguraTela / 2) {
-            aceitar();
+            provider.aceitar();
           } else {
-            recusar();
+            provider.recusar();
+          }
+          if (provider.perfilAtual >= provider.perfis.length) {
+            _mostrarFimPerfis(context);
           }
         },
         child: SafeArea(
@@ -86,9 +55,12 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
             direction: DismissDirection.horizontal,
             onDismissed: (direction) {
               if (direction == DismissDirection.startToEnd) {
-                recusar(); 
+                provider.recusar();
               } else if (direction == DismissDirection.endToStart) {
-                aceitar(); 
+                provider.aceitar();
+              }
+              if (provider.perfilAtual >= provider.perfis.length) {
+                _mostrarFimPerfis(context);
               }
             },
             background: Container(
@@ -108,10 +80,11 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    width: 360, 
+                    width: 360,
                     child: Card(
                       elevation: 8,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
                       child: Padding(
                         padding: const EdgeInsets.all(24.0),
                         child: Column(
@@ -119,7 +92,8 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
                           children: [
                             Text(
                               perfil['nome'],
-                              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 28, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(height: 16),
                             Text(
@@ -145,30 +119,48 @@ class _MatchmakingPageState extends State<MatchmakingPage> {
                       children: [
                         Expanded(
                           child: ElevatedButton.icon(
-                            onPressed: aceitar,
+                            onPressed: () {
+                              provider.aceitar();
+                              if (provider.perfilAtual >= provider.perfis.length) {
+                                _mostrarFimPerfis(context);
+                              }
+                            },
                             icon: Icon(Icons.check, color: Colors.white, size: 28),
                             label: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 14.0),
-                              child: Text("Aceitar", style: TextStyle(fontSize: 18, color: Colors.white)),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 14.0),
+                              child: Text("Aceitar",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white)),
                             ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.green,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
                             ),
                           ),
                         ),
                         SizedBox(width: 12),
                         Expanded(
                           child: ElevatedButton.icon(
-                            onPressed: recusar,
+                            onPressed: () {
+                              provider.recusar();
+                              if (provider.perfilAtual >= provider.perfis.length) {
+                                _mostrarFimPerfis(context);
+                              }
+                            },
                             icon: Icon(Icons.close, color: Colors.white, size: 28),
                             label: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 14.0),
-                              child: Text("Recusar", style: TextStyle(fontSize: 18, color: Colors.white)),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 14.0),
+                              child: Text("Recusar",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white)),
                             ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.red,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
                             ),
                           ),
                         ),

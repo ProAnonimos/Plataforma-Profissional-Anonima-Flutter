@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/suporte_provider.dart';
 
-class SupportPage extends StatefulWidget {
-  @override
-  _SupportPageState createState() => _SupportPageState();
-}
-
-class _SupportPageState extends State<SupportPage> {
-  final TextEditingController _mensagemController = TextEditingController();
-
+class SupportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final supportProvider = Provider.of<SuporteProvider>(context);
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -22,11 +19,12 @@ class _SupportPageState extends State<SupportPage> {
               Text(
                 "Precisa de ajuda? Aqui prezamos pela sua experiência em nossa plataforma",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
               ),
               Text("Qualquer reclamação ou dúvida estamos à disposição."),
               SizedBox(height: 24),
               TextField(
-                controller: _mensagemController,
+                controller: supportProvider.mensagemController,
                 maxLines: 6,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -35,22 +33,7 @@ class _SupportPageState extends State<SupportPage> {
               ),
               SizedBox(height: 20),
               ElevatedButton.icon(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      title: Text("Mensagem enviada"),
-                      content: Text("Obrigado por nos contatar!"),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text("Fechar"),
-                        ),
-                      ],
-                    ),
-                  );
-                  _mensagemController.clear();
-                },
+                onPressed: () => supportProvider.enviarMensagem(context),
                 icon: Icon(Icons.send),
                 label: Padding(
                   padding: const EdgeInsets.symmetric(

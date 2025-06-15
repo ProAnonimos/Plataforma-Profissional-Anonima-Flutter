@@ -1,23 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/forum_provider.dart';
 
 class ForumPage extends StatelessWidget {
-  final List<Map<String, String>> forums = [
-    {
-      "nome": "Flutter",
-      "descricao": "Discussões sobre Flutter e desenvolvimento mobile.",
-    },
-    {
-      "nome": "IA e Machine Learning",
-      "descricao": "Fórum para trocar ideias sobre inteligência artificial.",
-    },
-    {
-      "nome": "Dicas de Carreira",
-      "descricao": "Conselhos e dúvidas sobre carreira em tecnologia.",
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final forums = context.watch<ForumProvider>().forums;
+
     return ListView.builder(
       padding: EdgeInsets.all(12),
       itemCount: forums.length + 1,
@@ -32,7 +21,9 @@ class ForumPage extends StatelessWidget {
             ),
           );
         }
+
         final forum = forums[index - 1];
+
         return Card(
           margin: EdgeInsets.only(bottom: 12),
           child: Padding(
