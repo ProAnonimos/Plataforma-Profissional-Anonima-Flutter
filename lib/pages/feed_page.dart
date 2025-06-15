@@ -5,7 +5,8 @@ import 'matchmaking_page.dart';
 import 'suporte_page.dart';
 import 'perfil_page.dart';
 import 'forum_page.dart';
-import 'noticias_tecnologia_page.dart';
+import 'vagas_emprego_page.dart';
+import 'noticias_page.dart';
 
 class FeedPage extends StatefulWidget {
   @override
@@ -81,46 +82,60 @@ class _FeedPageState extends State<FeedPage> {
           : Column(
               children: [
                 if (_currentIndex == 0)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                          ),
-                          onPressed: () {
-                            setState(() => _currentIndex = 2);
-                          },
-                          child: Text("Fórum"),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                          ),
-                          onPressed: () {
-                            setState(() => _currentIndex = 1);
-                          },
-                          child: Text("Matchmaking"),
-                        ),
-                        ElevatedButton(
-  onPressed: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => NoticiasTecnologiaPage(),
-      ),
-    );
-  },
-  child: Text("Notícias"),
-)
-
-                      ],
-                    ),
-                  ),
+  Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => NoticiasPage()),
+            );
+          },
+          child: Text("Notícias"),
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => VagasEmpregoPage()),
+            );
+          },
+          child: Text("Vagas"),
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+          ),
+          onPressed: () {
+            setState(() => _currentIndex = 2);
+          },
+          child: Text("Fórum"),
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+          ),
+          onPressed: () {
+            setState(() => _currentIndex = 1);
+          },
+          child: Text("Matchmaking"),
+        ),
+      ],
+    ),
+  ),
                 Expanded(
                   child: _currentIndex == 0
                       ? NoticiasTecnologia(onPostTap: abrirPost)
