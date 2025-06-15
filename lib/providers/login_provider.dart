@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'perfil_provider.dart';
 
 class LoginProvider with ChangeNotifier {
   String _usuario = '';
@@ -21,7 +22,7 @@ class LoginProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> login() async {
+  Future<bool> login(PerfilProvider perfilProvider) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
@@ -30,8 +31,10 @@ class LoginProvider with ChangeNotifier {
 
     _isLoading = false;
 
-//PERFIL PRA TESTES -----------------
-   if (_usuario == 'teste' && _senha == '1234') {
+  // ************* PERFIL PRA TESTE
+
+    if (_usuario == 'teste' && _senha == '1234') {
+      perfilProvider.setNome(_usuario);
       notifyListeners();
       return true;
     } else {

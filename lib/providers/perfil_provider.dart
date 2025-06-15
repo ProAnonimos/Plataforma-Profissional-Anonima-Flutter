@@ -7,4 +7,8 @@ class PerfilProvider extends ChangeNotifier {
   String bio = "Sou um desenvolvedor focado em mobile e análise de dados.";
   List<String> habilidades = ["Flutter", "SQL", "Python"];
 
+  void setNome(String novoNome) {
+    nome = novoNome;
+    notifyListeners();
+  }
 }

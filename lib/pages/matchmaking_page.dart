@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:provider/provider.dart';
 import '../providers/matchmaking_provider.dart';
 
@@ -23,15 +23,22 @@ class MatchmakingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.watch<MatchmakingProvider>();
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (provider.acabou) {
+        _mostrarFimPerfis(context);
+      }
+    });
+
     final perfil = provider.perfilAtualDados;
 
     if (perfil == null) {
-      return Center(
-        child: ElevatedButton(
-          onPressed: () {
-            provider.reset();
-          },
-          child: Text("Reiniciar"),
+      return Scaffold(
+        body: Center(
+          child: Text(
+            "Você já viu todos os perfis.",
+            style: TextStyle(fontSize: 20),
+            textAlign: TextAlign.center,
+          ),
         ),
       );
     }
@@ -40,13 +47,15 @@ class MatchmakingPage extends StatelessWidget {
       body: GestureDetector(
         onTapUp: (details) {
           final larguraTela = MediaQuery.of(context).size.width;
-          if (details.globalPosition.dx < larguraTela / 2) {
-            provider.aceitar();
-          } else {
-            provider.recusar();
-          }
-          if (provider.perfilAtual >= provider.perfis.length) {
+          if (provider.acabou) {
             _mostrarFimPerfis(context);
+            return;
+          }
+
+          if (details.globalPosition.dx < larguraTela / 2) {
+            provider.recusar(); 
+          } else {
+            provider.aceitar(); 
           }
         },
         child: SafeArea(
@@ -54,13 +63,15 @@ class MatchmakingPage extends StatelessWidget {
             key: ValueKey(perfil['nome']),
             direction: DismissDirection.horizontal,
             onDismissed: (direction) {
+              if (provider.acabou) {
+                _mostrarFimPerfis(context);
+                return;
+              }
+
               if (direction == DismissDirection.startToEnd) {
                 provider.recusar();
               } else if (direction == DismissDirection.endToStart) {
                 provider.aceitar();
-              }
-              if (provider.perfilAtual >= provider.perfis.length) {
-                _mostrarFimPerfis(context);
               }
             },
             background: Container(
@@ -120,21 +131,20 @@ class MatchmakingPage extends StatelessWidget {
                         Expanded(
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              provider.aceitar();
-                              if (provider.perfilAtual >= provider.perfis.length) {
+                              if (provider.acabou) {
                                 _mostrarFimPerfis(context);
+                                return;
                               }
+                              provider.recusar(); 
                             },
-                            icon: Icon(Icons.check, color: Colors.white, size: 28),
+                            icon: Icon(Icons.close, color: Colors.white, size: 28),
                             label: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 14.0),
-                              child: Text("Aceitar",
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.white)),
+                              padding: const EdgeInsets.symmetric(vertical: 14.0),
+                              child: Text("Recusar",
+                                  style: TextStyle(fontSize: 18, color: Colors.white)),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
+                              backgroundColor: Colors.red,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8)),
                             ),
@@ -144,21 +154,20 @@ class MatchmakingPage extends StatelessWidget {
                         Expanded(
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              provider.recusar();
-                              if (provider.perfilAtual >= provider.perfis.length) {
+                              if (provider.acabou) {
                                 _mostrarFimPerfis(context);
+                                return;
                               }
+                              provider.aceitar(); 
                             },
-                            icon: Icon(Icons.close, color: Colors.white, size: 28),
+                            icon: Icon(Icons.check, color: Colors.white, size: 28),
                             label: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 14.0),
-                              child: Text("Recusar",
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.white)),
+                              padding: const EdgeInsets.symmetric(vertical: 14.0),
+                              child: Text("Aceitar",
+                                  style: TextStyle(fontSize: 18, color: Colors.white)),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red,
+                              backgroundColor: Colors.green,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8)),
                             ),

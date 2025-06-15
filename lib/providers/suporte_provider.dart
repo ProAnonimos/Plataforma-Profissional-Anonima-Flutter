@@ -6,7 +6,7 @@ class SuporteProvider extends ChangeNotifier {
   void enviarMensagem(BuildContext context) {
     final mensagem = mensagemController.text.trim();
     if (mensagem.isEmpty) {
-        SnackBar(content: Text('Mensagem vazia!')),
+      SnackBar(content: Text('Mensagem vazia!'));
       return;
     }
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'feed_page.dart';
+import '../providers/login_provider.dart';
+import '../providers/perfil_provider.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _userController = TextEditingController();
@@ -7,6 +10,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginProvider = Provider.of<LoginProvider>(context);
+    final perfilProvider = Provider.of<PerfilProvider>(context, listen: false);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -24,7 +30,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 8), 
+              SizedBox(height: 8),
               Text(
                 "Autenticação segura",
                 style: TextStyle(
@@ -45,15 +51,31 @@ class LoginPage extends StatelessWidget {
                 decoration: InputDecoration(labelText: "Senha"),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => FeedPage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(minimumSize: Size(200, 50)),
-                child: Text("Entrar", style: TextStyle(fontSize: 16)),
-              ),
+
+              loginProvider.isLoading
+                  ? CircularProgressIndicator()
+                  : ElevatedButton(
+                      onPressed: () async {
+                        loginProvider.setUsuario(_userController.text.trim());
+                        loginProvider.setSenha(_passController.text.trim());
+
+                        bool sucesso =
+                            await loginProvider.login(perfilProvider);
+
+                        if (sucesso) {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (_) => FeedPage()),
+                          );
+                        } else {
+                          // Mostra erro
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(loginProvider.error ?? 'Erro no login')),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(minimumSize: Size(200, 50)),
+                      child: Text("Entrar", style: TextStyle(fontSize: 16)),
+                    ),
             ],
           ),
         ),
