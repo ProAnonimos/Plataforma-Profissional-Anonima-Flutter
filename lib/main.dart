@@ -3,14 +3,23 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'pages/login_page.dart';
 import 'providers/all_providers.dart';
+import 'firebase_options.dart';
+import 'firebase_messaging/firebase_messaging.dart';
+
 
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-  runApp(
+  FirebaseNotifications((message) {
+    print("Notificação recebida: $message");
+  }).setUpFirebase();
+
+   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => NotificationProvider()..initialize()),
@@ -28,6 +37,7 @@ void main() async {
     ),
   );
 }
+
 
 class PlataformaAnonima extends StatelessWidget {
   @override
