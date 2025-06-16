@@ -1,19 +1,47 @@
-# plataforma_profissional_anonima
+# Plataforma Profissional Anônima 📱
+Aplicativo Flutter que conecta profissionais e usuários de forma anônima, oferecendo funcionalidades como chat, feed, fórum, matchmaking, suporte, perfil, vagas de empregos e envio e recebimento de notificações push via Firebase Cloud Messaging (FCM).
 
-A new Flutter project.
+## Funcionalidades
+* Notificações push via Firebase Cloud Messaging
+* Chat, feed, fórum, matchmaking, suporte, perfil e vagas de emprego
+* Notificações push configuradas com Firebase Cloud Messaging
+* Gerenciamento de estado com Provider
+  
+## Tecnologias utilizadas
+* Flutter (Dart)
+* Firebase Cloud Messaging
+* Configuração multiplataforma
 
-## Conta pra testes
-usuario: user
+## Como executar o projeto
+1. Clonar o repositório
+   ```
+   git clone https://github.com/proanonimos/plataforma_profissional_anonima.git
+   cd plataforma_profissional_anonima
+2. Limpar e instalar as dependências 
+   ```
+   flutter clean
+   flutter pub get
+3. Configurar o ambiente Firebase
+  - Use o FlutterFire CLI para configurar o Firebase Cloud Messaging
+  - Adicione o arquivo firebase_options.dart gerado na pasta lib/
+  - Documentação oficial Firebase: https://firebase.google.com/docs/flutter/setup?platform=ios
+4. Configurar um emulador
+  - Baixe o Android Studio
+  - Configure um AVD
+  - Documentação oficial Android Studio: https://developer.android.com/develop
+5. Executar o projeto e escolher dispositivo android
+```
+   flutter run
+```
+### Conta pra testes
+usuario: teste
 senha: 1234
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Grupo e RM
+| Nome                      | RM     |
+|---------------------------|--------|
+| Heloísa Santos de Sousa   | 550256 |
+| Samuel de Paula Santolim  | 99115  |
+| Francisco Henrique Lima   | 99545  |
+| Lucas Henrique Carrascosa | 99883  |
+| Pedro Reginato            | 550896 |
