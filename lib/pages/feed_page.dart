@@ -10,6 +10,7 @@ import 'perfil_page.dart';
 import 'forum_page.dart';
 import 'vagas_emprego_page.dart';
 import 'noticias_page.dart';
+import 'eventos_page.dart';
 
 class FeedPage extends StatelessWidget {
   final List<Widget> _pages = [
@@ -91,7 +92,8 @@ class FeedPage extends StatelessWidget {
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => VagasEmpregoPage()),
+                              builder: (_) => VagasEmpregoPage(),
+                            ),
                           ),
                           child: Text("Vagas"),
                         ),
@@ -100,27 +102,21 @@ class FeedPage extends StatelessWidget {
                             backgroundColor: Colors.blue,
                             foregroundColor: Colors.white,
                           ),
-                          onPressed: () =>
-                              feedProvider.mudarPagina(2), // forum
-                          child: Text("Fórum"),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => EventosPage(),
+                            ),
                           ),
-                          onPressed: () =>
-                              feedProvider.mudarPagina(1), // matchmacking
-                          child: Text("Matchmaking"),
+                          child: Text("Eventos"),
                         ),
                       ],
                     ),
                   ),
+
                 Expanded(
                   child: currentIndex == 0
-                      ? NoticiasTecnologia(
-                          onPostTap: feedProvider.abrirPost,
-                        )
+                      ? NoticiasTecnologia(onPostTap: feedProvider.abrirPost)
                       : _pages[currentIndex],
                 ),
               ],
@@ -136,7 +132,9 @@ class FeedPage extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.flash_on), label: "Fórum"),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: "Chat"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.support_agent), label: "Suporte"),
+            icon: Icon(Icons.support_agent),
+            label: "Suporte",
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Perfil"),
         ],
       ),

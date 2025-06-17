@@ -67,7 +67,6 @@ class LoginPage extends StatelessWidget {
                             MaterialPageRoute(builder: (_) => FeedPage()),
                           );
                         } else {
-                          // Mostra erro
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(loginProvider.error ?? 'Erro no login')),
                           );

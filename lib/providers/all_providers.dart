@@ -8,3 +8,4 @@ export 'noticias_provider.dart';
 export 'perfil_provider.dart';
 export 'suporte_provider.dart';
 export 'vagas_provider.dart';
+export 'eventos_provider.dart';

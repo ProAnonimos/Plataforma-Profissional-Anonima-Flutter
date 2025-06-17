@@ -32,6 +32,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => PerfilProvider()),
         ChangeNotifierProvider(create: (_) => SuporteProvider()),
         ChangeNotifierProvider(create: (_) => VagasProvider()),
+        ChangeNotifierProvider(create: (_) => EventosProvider()),
+
       ],
       child: PlataformaAnonima(),
     ),
