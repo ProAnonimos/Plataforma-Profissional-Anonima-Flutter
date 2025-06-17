@@ -10,6 +10,18 @@ class EventosPage extends StatefulWidget {
 
 class _EventosPageState extends State<EventosPage> {
   late GoogleMapController _mapController;
+  bool _carregando = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // Busca os eventos ao iniciar
+    Future.microtask(() async {
+      final provider = Provider.of<EventosProvider>(context, listen: false);
+      await provider.buscarEventosTicketmaster();
+      setState(() => _carregando = false);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +29,18 @@ class _EventosPageState extends State<EventosPage> {
 
     return Scaffold(
       appBar: AppBar(title: Text("Eventos de Tecnologia")),
-      body: GoogleMap(
-        initialCameraPosition: CameraPosition(
-          target: LatLng(-22.9, -43.2), // Posição inicial no Brasil
-          zoom: 4.5,
-        ),
-        markers: eventosProvider.marcadores,
-        onMapCreated: (controller) {
-          _mapController = controller;
-        },
-      ),
+      body: _carregando
+          ? Center(child: CircularProgressIndicator())
+          : GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: LatLng(-22.9, -43.2), // Posição inicial no Brasil
+                zoom: 4.5,
+              ),
+              markers: eventosProvider.marcadores,
+              onMapCreated: (controller) {
+                _mapController = controller;
+              },
+            ),
     );
   }
 }
