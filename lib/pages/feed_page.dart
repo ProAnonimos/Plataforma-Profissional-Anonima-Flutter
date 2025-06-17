@@ -106,17 +106,9 @@ class FeedPage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (_) => EventosPage(),
-                            ), // <-- Adicionado
+                            ),
                           ),
-                          child: Text("Eventos"), // <-- Adicionado
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                          ),
-                          onPressed: () => feedProvider.mudarPagina(2),
-                          child: Text("Fórum"),
+                          child: Text("Eventos"),
                         ),
                       ],
                     ),

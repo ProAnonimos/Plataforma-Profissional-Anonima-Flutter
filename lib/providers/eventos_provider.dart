@@ -41,7 +41,7 @@ class EventosProvider with ChangeNotifier {
 
     final response = await http.get(url);
 
-    _eventos.clear(); // Limpa antes de adicionar eventos
+    _eventos.clear();
 
     // adicionamos alguns eventos mockados no brasil para caso nao apareça nenhum
     _eventos.addAll([
@@ -55,13 +55,13 @@ class EventosProvider with ChangeNotifier {
         titulo: 'Tech Norte 2025',
         descricao: 'Evento de tecnologia no norte do país.',
         data: DateTime(2025, 8, 15),
-        local: LatLng(-1.455833, -48.503887), // Belém
+        local: LatLng(-1.455833, -48.503887), 
       ),
       Evento(
         titulo: 'Smart Cities Conference',
         descricao: 'Inovações tecnológicas para cidades inteligentes.',
         data: DateTime(2025, 9, 5),
-        local: LatLng(-19.8157, -43.9542), // Contagem / MG
+        local: LatLng(-19.8157, -43.9542), 
       ),
     ]);
 

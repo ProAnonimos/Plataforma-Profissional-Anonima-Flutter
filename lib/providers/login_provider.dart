@@ -31,7 +31,7 @@ class LoginProvider with ChangeNotifier {
 
     _isLoading = false;
 
-  // ************* PERFIL PRA TESTE
+  // ************* PERFIL PRA TESTE  *****************
 
     if (_usuario == 'teste' && _senha == '1234') {
       perfilProvider.setNome(_usuario);

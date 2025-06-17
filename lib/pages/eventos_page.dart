@@ -15,7 +15,6 @@ class _EventosPageState extends State<EventosPage> {
   @override
   void initState() {
     super.initState();
-    // Busca os eventos ao iniciar
     Future.microtask(() async {
       final provider = Provider.of<EventosProvider>(context, listen: false);
       await provider.buscarEventosTicketmaster();
@@ -33,7 +32,7 @@ class _EventosPageState extends State<EventosPage> {
           ? Center(child: CircularProgressIndicator())
           : GoogleMap(
               initialCameraPosition: CameraPosition(
-                target: LatLng(-22.9, -43.2), // Posição inicial no Brasil
+                target: LatLng(-22.9, -43.2),
                 zoom: 4.5,
               ),
               markers: eventosProvider.marcadores,
