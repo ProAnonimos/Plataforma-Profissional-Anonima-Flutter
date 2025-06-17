@@ -4,16 +4,19 @@ Aplicativo Flutter que conecta profissionais e usuários de forma anônima, ofer
 ## Funcionalidades
 * Notificações push via Firebase Cloud Messaging
 * Chat, feed, fórum, matchmaking, suporte, perfil e vagas de emprego
-* Notificações push configuradas com Firebase Cloud Messaging
 * Integração com a API do Google Maps para exibir localização de eventos e oportunidades próximas
-* Integração com a API do Ticketmaster para buscar e exibir eventos culturais, profissionais e de networking relevantes conforme a localização do usuário
+* Integração com a API do Ticketmaster para buscar eventos culturais, profissionais e de networking conforme a localização do usuário
+* Integração com a NewsAPI para exibir notícias atualizadas de tecnologia no feed
+* Integração com a TheMuse API para buscar e exibir vagas de emprego remotas ou por localização
 * Gerenciamento de estado com Provider
   
 ## Tecnologias utilizadas
 * Flutter (Dart)
 * Firebase Cloud Messaging
-* Google Maps API – usada para geolocalização e mapeamento de pontos de eventos
-* Ticketmaster API – usada para buscar eventos de tecnologia
+* Google Maps API – para geolocalização e visualização de eventos no mapa
+* Ticketmaster API – para busca de eventos de tecnologia
+* NewsAPI – para obtenção de notícias reais
+* TheMuse API – para listagem de vagas de emprego
 * Provider para gerenciamento de estado
 * Configuração multiplataforma (Android e Web)
 
